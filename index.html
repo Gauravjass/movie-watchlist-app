@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+        <div class="wrap">
+            <header>    
+                <div class="title-text-container">
+                    <h1>Find Your Film</h1>
+                    <p><a href="watchlist.html">My Watchlist</a></p>
+                </div>
+                <div class="search-container">
+                        <img src="icons/search-svg.svg" />
+                        <input type="text" class="search-bar" id="movie-name" placeholder="Search for a movie" />
+                    <button class="btn" id="btn-search">Search</button>
+                </div>
+            </header>
+            <main id="result-list" class="main"> 
+                <div class="starting-state">
+                <img src="icons/movie.png" />
+                <p class="starting-text">Start Exploring</p>
+                </div>
+            </main>
+        </div>
+        <script src="index.js"></script>
+    </body>
+</html> 
