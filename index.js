@@ -1,95 +1,106 @@
-const resultList = document.getElementById('result-list')
-const movieName = document.getElementById('movie-name')
-const btnSearch = document.getElementById('btn-search')
+import moviePoster from "./images/no-poster.png";
+const resultList = document.getElementById("result-list");
+const movieName = document.getElementById("movie-name");
+const btnSearch = document.getElementById("btn-search");
+
+const key = import.meta.env.VITE_OMDB_API_KEY;
 
 //getting data from localstorage
-let moviesArr = JSON.parse(localStorage.getItem('watchlist')) || []
+let moviesArr = JSON.parse(localStorage.getItem("watchlist")) || [];
 
-// array to store the list of moves comes after search
-let movieArrOfObjs = []
+let movieArrOfObjs = [];
 
- document.addEventListener('click', function(e){
-    if(e.target.dataset.watchlist){
-        saveMovieToWhishlist(e.target.dataset.watchlist)
-    }
-  })
-  
-  
-  function saveMovieToWhishlist(movieId){ 
-    
-    const movieExist = moviesArr.some(movie => movie.movieId === movieId)
-    
-    if(movieExist){
-        alert("This movie already in your watchlist")
-        return
-    }
-    
-    let newMovie =  movieArrOfObjs.filter(movie => movie.movieId === movieId)
-    moviesArr.push(...newMovie)
-    localStorage.setItem('watchlist', JSON.stringify(moviesArr))
-    alert("Successfully added to your watchlist")
+document.addEventListener("click", function (e) {
+  const movieId = e.target.dataset.add || e.target.parentElement.dataset.add;
+  if (movieId) {
+    saveMovieToWhishlist(movieId);
+  }
+});
+
+function saveMovieToWhishlist(movieId) {
+  const movieExist = moviesArr.some((movie) => movie.movieId === movieId);
+
+  if (movieExist) {
+    return alert("Already in watchlist!");
   }
 
-function searchMovie(){
-    
-    // storing the value of input field
-    const movie = movieName.value.trim().toLowerCase()
+  let newMovie = movieArrOfObjs.find((movie) => movie.imdbID === movieId);
+  moviesArr.push(newMovie);
+  localStorage.setItem("watchlist", JSON.stringify(moviesArr));
+  renderMovies(movieArrOfObjs);
+}
 
-    fetch(`https://www.omdbapi.com/?s=${movie}&r=json&apikey=e863c422`)
-        .then(res => res.json())
-            .then(data => {
-                if(data.Response === 'True'){
-                    const movies = data.Search
-                    console.log(movies)
-                    let html = ""
-                    movies.forEach(film => {
-                        const imdbId = film.imdbID
-                        fetch(`https://www.omdbapi.com/?i=${imdbId}&r=json&apikey=e863c422`)
-                            .then(res => res.json())
-                            .then(movie => {   
-                            html += 
-                            `<div class="card">
-                                <img src="${movie.Poster}"  />
+async function searchMovie() {
+  // storing the value of input field
+  const movieQuery = movieName.value.trim().toLowerCase();
+  if (!movieQuery) return;
+
+  resultList.innerHTML = `<p class="starting-state">Searching for movies...</p>`;
+
+  try {
+    const res = await fetch(
+      `https://www.omdbapi.com/?s=${movieQuery}&r=json&apikey=${key}`,
+    );
+    const data = await res.json();
+
+    if (data.Response === "True") {
+      const moviePromises = data.Search.map((movie) =>
+        fetch(
+          `https://www.omdbapi.com/?i=${movie.imdbID}&r=json&apikey=${key}`,
+        ).then((res) => res.json()),
+      );
+
+      movieArrOfObjs = await Promise.all(moviePromises);
+      renderMovies(movieArrOfObjs);
+    } else {
+      resultList.innerHTML = `<div class="not-found-container"><p class="not-found-text">Unable to find what you’re looking for. Please try another search.</p></div>`;
+    }
+  } catch (err) {
+    console.error("Search failed", err);
+  }
+}
+
+function renderMovies(movies) {
+  const savedId = moviesArr.map((movie) => movie.imdbID);
+  const html = movies
+    .map((movie) => {
+      const isSaved = savedId.includes(movie.imdbID);
+      return `<article class="card" style = >
+                                <img src="${movie.Poster !== "N/A" ? movie.Poster : moviePoster}" 
+                                    onerror="src='${moviePoster}'; onerror=null;"
+                                    alt=${movie.Title}
+                                     />
                                 <div class="title-section">
                                     <h2>${movie.Title}</h2>
-                                    <span class="star-baseline"><img src="icons/star.png" class="star-icon" /></span>
-                                    <span class="rating">${movie.imdbRating}</span>
+                                    <span class="star-baseline"><img src="icons/star.png" class="star-icon" alt="Rating" aria-hidden="true" /></span>
+                                    <span class="rating" aria-label="Rated ${movie.imdbRating} stars">${movie.imdbRating}</span>
                                 </div>
                                 <div class="tags">
-                                    <p>${movie.Runtime}</p>
-                                    <p>${movie.Genre}</p>
-                                    <p>
-                                        <img src="icons/plus.png" class="add-to-watchlist" data-watchlist = "${movie.imdbID}" id="btn-watchlist"/>
-                                        <span>Watchlist</span>
-                                    </p>
+                                    <p> <span class="sr-only"> Duration: </span> ${movie.Runtime}</p>
+                                    <p> <span class="sr-only">Genre: </span> ${movie.Genre}</p>
+                                    <button 
+                                      type="button" 
+                                      class="icon-btn ${isSaved ? "icon-btn-disabled" : ""}" 
+                                      aria-label="${isSaved ? "Already in watchlist" : "Add to watchlist"}"
+                                      data-add="${movie.imdbID}"
+                                      ${isSaved ? "disabled" : ""}
+                                      >
+                                    
+                                       ${isSaved ? `<i class="icon-check fa-solid fa-circle-check" aria-hidden="true"></i>` : `<img src="icons/plus.png" class="icon-watchlist" aria-hidden="true" />`}
+                                       <span  class="watchlist-btn-text"> ${isSaved ? "In Watchlist" : "Watchlist"} </span>
+                                      </button>
+                                  
                                 </div>
                                 <p class="desc">${movie.Plot} </p>
-                            </div>`
-                        
-                            // creating an movie object 
-                            let movieObj = ({
-                                title: movie.Title,
-                                poster: movie.Poster,
-                                rating: movie.imdbRating,
-                                runtime: movie.Runtime,
-                                genre: movie.Genre,
-                                plot: movie.Plot,
-                                movieId: movie.imdbID
-                                })
-                        
-                            movieArrOfObjs.push(movieObj)
-                       
-                            resultList.innerHTML = html 
-                
-                        })
-                    
-                    })
-            
-                } else {
-                        resultList.innerHTML = `<div class="not-found-container"><p class="not-found-text">Unable to find what you’re looking for. Please try another search.</p></div>`
-                        }
-    })     
+                            </article>`;
+    })
+    .join("");
+
+  resultList.style.paddingTop = "2.655em";
+  resultList.innerHTML = html;
 }
-   btnSearch.addEventListener('click', searchMovie)
-   
- 
+
+movieName.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") searchMovie();
+});
+btnSearch.addEventListener("click", searchMovie);

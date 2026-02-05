@@ -1,30 +1,50 @@
-<html>
-    <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="index.css">
-    </head>
-    <body>
-        <div class="wrap">
-            <header>    
-                <div class="title-text-container">
-                    <h1>Find Your Film</h1>
-                    <p><a href="watchlist.html">My Watchlist</a></p>
-                </div>
-                <div class="search-container">
-                        <img src="icons/search-svg.svg" />
-                        <input type="text" class="search-bar" id="movie-name" placeholder="Search for a movie" />
-                    <button class="btn" id="btn-search">Search</button>
-                </div>
-            </header>
-            <main id="result-list" class="main"> 
-                <div class="starting-state">
-                <img src="icons/movie.png" />
-                <p class="starting-text">Start Exploring</p>
-                </div>
-            </main>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Watchlist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="title-text-container">
+          <h1>Find Your Film</h1>
+          <p><a href="watchlist.html">My Watchlist</a></p>
         </div>
-        <script src="index.js"></script>
-    </body>
-</html> 
+        <div class="search-container">
+          <img src="icons/search-svg.svg" alt="search icon" />
+          <label for="movie-name" class="sr-only">Search for a movie</label>
+          <input
+            type="text"
+            class="search-bar"
+            id="movie-name"
+            placeholder="Search for a movie"
+          />
+          <button class="btn" id="btn-search">Search</button>
+        </div>
+      </header>
+      <main id="result-list" class="main" aria-live="polite">
+        <div class="starting-state">
+          <img src="icons/movie.png" alt="movie reel icon" />
+          <p class="starting-text">Start Exploring</p>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
