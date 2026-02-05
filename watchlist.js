@@ -17,7 +17,7 @@ function rendermovies(Arr) {
   const html = Arr.map(
     (movie) => `<article class="card">
                         <img src="${movie.Poster !== "N/A" ? movie.Poster : "images/no-poster.png"}" 
-                              onerror="src='${moviePoster}'; onerror=null;"
+                              onerror="this.src='images/no-poster.png'; this.onerror=null;"
                               alt=${movie.Title} />
                         <div class="title-section">
                             <h2>${movie.Title}</h2>

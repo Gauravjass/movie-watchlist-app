@@ -66,7 +66,7 @@ function renderMovies(movies) {
       const isSaved = savedId.includes(movie.imdbID);
       return `<article class="card" style = >
                                 <img src="${movie.Poster !== "N/A" ? movie.Poster : "images/no-poster.png"}" 
-                                    onerror="src='${moviePoster}'; onerror=null;"
+                                    onerror="this.src='images/no-poster.png'; this.onerror=null;"
                                     alt=${movie.Title}
                                      />
                                 <div class="title-section">
