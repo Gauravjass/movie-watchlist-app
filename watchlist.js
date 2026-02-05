@@ -1,4 +1,3 @@
-import moviePoster from "./images/no-poster.png";
 let myMovies = document.getElementById("my-movies");
 let moviesArr = JSON.parse(localStorage.getItem("watchlist")) || [];
 
@@ -17,7 +16,7 @@ function rendermovies(Arr) {
 
   const html = Arr.map(
     (movie) => `<article class="card">
-                        <img src="${movie.Poster !== "N/A" ? movie.Poster : moviePoster}" 
+                        <img src="${movie.Poster !== "N/A" ? movie.Poster : "images/no-poster.png"}" 
                               onerror="src='${moviePoster}'; onerror=null;"
                               alt=${movie.Title} />
                         <div class="title-section">

@@ -1,4 +1,3 @@
-import moviePoster from "./images/no-poster.png";
 const resultList = document.getElementById("result-list");
 const movieName = document.getElementById("movie-name");
 const btnSearch = document.getElementById("btn-search");
@@ -66,7 +65,7 @@ function renderMovies(movies) {
     .map((movie) => {
       const isSaved = savedId.includes(movie.imdbID);
       return `<article class="card" style = >
-                                <img src="${movie.Poster !== "N/A" ? movie.Poster : moviePoster}" 
+                                <img src="${movie.Poster !== "N/A" ? movie.Poster : "images/no-poster.png"}" 
                                     onerror="src='${moviePoster}'; onerror=null;"
                                     alt=${movie.Title}
                                      />
