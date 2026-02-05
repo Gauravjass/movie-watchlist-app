@@ -48,7 +48,7 @@ header {
   justify-content: center;
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url(images/header.jpg);
+    url(/images/header.jpg);
   background-position: center;
   background-size: cover;
   position: relative;

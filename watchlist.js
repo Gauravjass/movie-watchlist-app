@@ -7,7 +7,7 @@ function rendermovies(Arr) {
     myMovies.innerHTML = `<div class="empty-watchlist-container">
                                     <h1 class="empty-watchlist-heading">Your watchlist is looking a little empty...</h1>
                                     <div>
-                                        <a href="index.html" aria-label="Go back to search and add movies"><img src="icons/plus.png" class="plus-icon" aria-hidden="true"/></a>
+                                        <a href="index.html" aria-label="Go back to search and add movies"><img src="/icons/plus.png" class="plus-icon" aria-hidden="true"/></a>
                                         <span>Let’s add some movies!</span>
                                     </div>
                                 </div>`;
@@ -16,12 +16,12 @@ function rendermovies(Arr) {
 
   const html = Arr.map(
     (movie) => `<article class="card">
-                        <img src="${movie.Poster !== "N/A" ? movie.Poster : "images/no-poster.png"}" 
-                              onerror="this.src='images/no-poster.png'; this.onerror=null;"
+                        <img src="${movie.Poster !== "N/A" ? movie.Poster : "/images/no-poster.png"}" 
+                              onerror="this.src='/images/no-poster.png'; this.onerror=null;"
                               alt=${movie.Title} />
                         <div class="title-section">
                             <h2>${movie.Title}</h2>
-                            <span class="star-baseline"><img src="icons/star.png" class="star-icon" alt="Rating" aria-hidden="true"/></span>
+                            <span class="star-baseline"><img src="/icons/star.png" class="star-icon" alt="Rating" aria-hidden="true"/></span>
                             <span class="rating"  aria-label="Rated ${movie.imdbRating} stars">${movie.imdbRating}</span>
                         </div>
                         <div class="tags">
@@ -32,7 +32,7 @@ function rendermovies(Arr) {
                             aria-label = "Remove ${movie.Title} from watchlist"
                             data-remove = "${movie.imdbID}"
                             >
-                              <img src ="icons/minus.png" class="watchlist-remove" alt="" aria-hidden="true" />
+                              <img src ="/icons/minus.png" class="watchlist-remove" alt="" aria-hidden="true" />
                               <span class="remove-movie-text">Remove</span>
                             </button>
                         </div>

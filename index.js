@@ -65,13 +65,13 @@ function renderMovies(movies) {
     .map((movie) => {
       const isSaved = savedId.includes(movie.imdbID);
       return `<article class="card" style = >
-                                <img src="${movie.Poster !== "N/A" ? movie.Poster : "images/no-poster.png"}" 
-                                    onerror="this.src='images/no-poster.png'; this.onerror=null;"
+                                <img src="${movie.Poster !== "N/A" ? movie.Poster : "/images/no-poster.png"}" 
+                                    onerror="this.src='/images/no-poster.png'; this.onerror=null;"
                                     alt=${movie.Title}
                                      />
                                 <div class="title-section">
                                     <h2>${movie.Title}</h2>
-                                    <span class="star-baseline"><img src="icons/star.png" class="star-icon" alt="Rating" aria-hidden="true" /></span>
+                                    <span class="star-baseline"><img src="/icons/star.png" class="star-icon" alt="Rating" aria-hidden="true" /></span>
                                     <span class="rating" aria-label="Rated ${movie.imdbRating} stars">${movie.imdbRating}</span>
                                 </div>
                                 <div class="tags">
@@ -85,7 +85,7 @@ function renderMovies(movies) {
                                       ${isSaved ? "disabled" : ""}
                                       >
                                     
-                                       ${isSaved ? `<i class="icon-check fa-solid fa-circle-check" aria-hidden="true"></i>` : `<img src="icons/plus.png" class="icon-watchlist" aria-hidden="true" />`}
+                                       ${isSaved ? `<i class="icon-check fa-solid fa-circle-check" aria-hidden="true"></i>` : `<img src="/icons/plus.png" class="icon-watchlist" aria-hidden="true" />`}
                                        <span  class="watchlist-btn-text"> ${isSaved ? "In Watchlist" : "Watchlist"} </span>
                                       </button>
                                   
