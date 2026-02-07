@@ -4,8 +4,6 @@ A sleek, responsive web application that allows users to explore the OMDB databa
 
 
 
----
-
 ## 🚀 Features
 
 * **Real-time Search:** Fetches movie data dynamically using the OMDB API.
@@ -14,7 +12,6 @@ A sleek, responsive web application that allows users to explore the OMDB databa
 * **Optimized Performance:** Built with **Vite** for lightning-fast development and optimized production bundling.
 * **Accessible UI:** Includes custom focus states and accessible button targets for a better user experience.
 
----
 
 ## 🛠️ Tech Stack
 
@@ -22,7 +19,6 @@ A sleek, responsive web application that allows users to explore the OMDB databa
 * **Build Tool:** Vite
 * **API:** OMDB API
 
----
 
 ## Getting Started
 Install the dependencies and run the project
